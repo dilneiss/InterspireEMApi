@@ -73,9 +73,10 @@ function interspire_em_api_autoload($class)
         $filename = INTERSPIRE_EM_API_DIR.implode('/', $_class).'.php';
         if (file_exists($filename)) {
             include_once($filename);
+            return TRUE;
         }
         else {
-            trigger_error('interspire_em_api_autoload: File '.$filename.' does not exist', E_USER_ERROR);
+            return FALSE;
         }
     }
 }

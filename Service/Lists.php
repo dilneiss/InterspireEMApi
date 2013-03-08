@@ -2,14 +2,24 @@
 class InterspireEMApi_Service_Lists extends InterspireEMApi_Service_Abstract
 {
     protected $_requestMethodMap = array(
-        'getCustomFields' => 'GetCustomFields',
-        'getLists'        => 'GetLists',
+        'deleteAllSubscribers' => 'DeleteAllSubscribers',
+        'getCustomFields'      => 'GetCustomFields',
+        'getLists'             => 'GetLists',
     );
 
-    public function getCustomFields($listids = array())
+    public function deleteAllSubscribers($listId)
     {
         $details = array(
-            'listids' => $listids,
+            'listid' => $listId,
+        );
+
+        return $this->makeRequest($details);
+    }
+
+    public function getCustomFields($listIds = array())
+    {
+        $details = array(
+            'listids' => $listIds,
         );
 
         return $this->makeRequest($details);

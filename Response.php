@@ -18,6 +18,8 @@ class InterspireEMApi_Response
             if ($xmlResult->status == 'SUCCESS') {
                 $this->_error = FALSE;
                 $this->_data = $this->_simpleXmlToObject($xmlResult->data);
+
+                $this->_afterDataLoad();
             }
             else {
                 $this->_errorMessage = sprintf('API Error: %s', $xmlResult->errormessage);
@@ -46,6 +48,23 @@ class InterspireEMApi_Response
         }
     }
 
+    protected function _afterDataLoad()
+    {
+        return TRUE;
+    }
+
+    public function getData()
+    {
+        return $this->_data;
+    }
+
+    public function setData($data)
+    {
+        $this->_data = $data;
+
+        return $this;
+    }
+
     public function isError()
     {
         return $this->_error;
@@ -54,6 +73,14 @@ class InterspireEMApi_Response
     public function getErrorMessage()
     {
         return $this->_errorMessage;
+    }
+
+    public function setErrorMessage($error)
+    {
+        $this->_errorMessage = $error;
+        $this->_error = TRUE;
+
+        return $this;
     }
 
     private function _simpleXmlToArray($xml)

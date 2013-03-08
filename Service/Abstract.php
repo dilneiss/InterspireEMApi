@@ -26,7 +26,7 @@ abstract class InterspireEMApi_Service_Abstract
         );
 
         $xmlString = $this->_arrayToXmlString($xmlArray);
-//var_dump($xmlString);
+
         $curlHandle = curl_init($this->_client->getApiPath());
         curl_setopt_array($curlHandle, array(
             CURLOPT_RETURNTRANSFER => 1,
@@ -34,7 +34,12 @@ abstract class InterspireEMApi_Service_Abstract
             CURLOPT_POSTFIELDS => $xmlString,
         ));
 
-        return new InterspireEMApi_Response($curlHandle);
+        if (($responseClass = $this->_responseExists($caller)) !== FALSE) {
+            return new $responseClass($curlHandle);
+        }
+        else {
+            return new InterspireEMApi_Response($curlHandle);
+        }
     }
 
     private function _arrayToXmlString($array)
@@ -69,5 +74,21 @@ abstract class InterspireEMApi_Service_Abstract
     {
         $backtrace = debug_backtrace(FALSE);
         return $backtrace[2];
+    }
+
+    private function _responseExists($caller)
+    {
+        $responseClass = str_replace('InterspireEMApi_Service_', 'InterspireEMApi_Response_', $caller['class']);
+        $responseClassFunction = $responseClass.'_'.ucfirst($caller['function']);
+
+        if (class_exists($responseClassFunction)) {
+            return $responseClassFunction;
+        }
+        elseif (class_exists($responseClass)) {
+            return $responseClass;
+        }
+        else {
+            return FALSE;
+        }
     }
 }
