@@ -1,5 +1,6 @@
-Usage example
+#PHP Wrapper for Interspire Email Marketer XML API#
 
+##Example##
 ```php
 require('InterspireEMApi.php');
 

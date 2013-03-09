@@ -18,7 +18,7 @@ class InterspireEMApi_Service_Subscribers extends InterspireEMApi_Service_Abstra
      * @param bool $confirmed
      * @param array $customFields
      *
-     * @return InterspireEMApi_Response
+     * @return InterspireEMApi_Response_Subscribers_AddSubscriberToList
      */
     public function addSubscriberToList($email, $listId, $format = 'text', $confirmed = FALSE, $customFields = array())
     {

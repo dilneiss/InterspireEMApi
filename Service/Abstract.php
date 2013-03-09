@@ -66,7 +66,7 @@ abstract class InterspireEMApi_Service_Abstract
             return $str;
         }
         else {
-            return (string)$array;
+            return sprintf('<![CDATA[%s]]>', $array);
         }
     }
 
